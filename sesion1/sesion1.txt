@@ -1,0 +1,16 @@
+SESION 01
+
+docker run --name container-demo-1 -p 8080:80 -d icuadrosaforo255/dockerdemo
+docker logs container-demo-1
+docker inspect container-demo-1
+
+
+docker top container-demo-1
+docker stats
+
+
+docker run --name container-demo-4 -m 512m -d icuadrosaforo255/dockerdemo
+
+docker images "icuadrosaforo255/*"
+docker ps -a --filter="name=aforo*
+docker ps -a --filter="ancestor=hello-world"

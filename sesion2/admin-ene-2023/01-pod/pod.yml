@@ -1,0 +1,8 @@
+apiVersion: v1 
+kind: Pod #tipo de recursos
+metadata: #metadata del deployment
+  name: demoapp2  #nombre del pod
+spec: #especificacion del contenedor
+  containers:
+    - name: con-demoapp
+      image: icuadrosaforo255/dockerdemo

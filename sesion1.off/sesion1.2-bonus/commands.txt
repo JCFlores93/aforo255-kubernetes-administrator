@@ -1,0 +1,30 @@
+1. Init helm project
+helm create microaforo255
+
+2. Create package
+helm package microaforo255
+
+3. Create metadata(index.yaml)
+helm repo index .
+
+4. Create github pages.
+https://jcflores93.github.io/helm-aforo255-demo/
+
+5. Create account in Artifact Hub, then connect with
+
+6. Add repository
+helm repo add helmdemoaforo255-jf2c93 https://jcflores93.github.io/helm-aforo255-demo/
+
+7. Delete repo
+helm repo delete helmdemoaforo255-jf2c93 https://jcflores93.github.io/helm-aforo255-demo/
+
+8. Install chart
+helm install my-microaforo255 helmdemoaforo255-jf2c93/microaforo255 --version 0.1.0
+
+9. Uninstall chart
+helm delete my-microaforo255
+
+10. Remove repo
+helm repo remove helmdemoaforo255-jf2c93 https://jcflores93.github.io/helm-aforo255-demo/
+
+

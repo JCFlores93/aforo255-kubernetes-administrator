@@ -1,0 +1,15 @@
+envoy proxy también conocido como sidecar
+Toda comunicación entrante y saliente pasa por envoy proxy.
+
+kubectl label namespace ns-aforo255 istio-injection=enabled
+
+virtual service
+conjunto de reglas de enrutamiento de trafico para aplicar cuando se redirecciona a un host.
+Permite personalizarel enrutamiento para contextos de clientes especificos.
+Coincide con una regla y evalua un destino para enrutar el trafico
+
+Destination Rule
+Definen subconjuntos disponibles del servicio para enviar al trafico
+
+Traffic shifting
+Como cambiar el trafico de una version de microservicio a otra.

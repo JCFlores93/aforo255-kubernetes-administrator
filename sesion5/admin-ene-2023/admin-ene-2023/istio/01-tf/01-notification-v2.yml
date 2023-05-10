@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notificationservice-v2
+  namespace: ns-aforo255
+  labels:
+    app: notificationservice
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notificationservice
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: notificationservice
+        version: v2
+    spec:
+      containers:
+      - name: notification
+        image: icuadrosaforo255/istio-notification
+        ports:
+        - containerPort: 80
+        env:
+        - name: Version
+          value: "Kubernetes v2"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi

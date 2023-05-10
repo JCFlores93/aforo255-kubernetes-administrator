@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-aforo255
+  labels:
+    name: ns-aforo255
+    istio-injection: enabled

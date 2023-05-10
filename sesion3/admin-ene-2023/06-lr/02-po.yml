@@ -1,0 +1,35 @@
+# 1 crear un POD sin limites
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: demoapplimit
+  namespace: ns-prod
+spec: 
+  containers:
+  - name: container-demoapp
+    image: icuadrosaforo255/dockerdemo 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: ns-prod
+  name: frontend
+spec:
+  containers:
+  - name: app
+    image: hello-world
+    resources:
+      requests:
+        memory: "64Mi" #Garantizado
+        cpu: "2000m" #Garantizado
+      limits:
+        memory: "128Mi"
+        cpu: "10000m"
+
+
+# 1 Creamos un POD con limites
+# 1 Crear un POD con limites cpu 10 core (ERROR - describe) 
+
+
+
+

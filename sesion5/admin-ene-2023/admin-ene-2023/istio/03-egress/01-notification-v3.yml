@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notificationservice-v3
+  namespace: ns-aforo255
+  labels:
+    app: notificationservice
+    version: v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notificationservice
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: notificationservice
+        version: v3
+    spec:
+      containers:
+      - name: notification
+        image: icuadrosaforo255/istio-notification
+        ports:
+        - containerPort: 80
+        env:
+        - name: Version
+          value: "Kubernetes v3"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: notificationservice
+  namespace: ns-aforo255
+spec:
+  host: notificationservice
+  subsets:
+  - labels:
+      version: v1
+    name: version-v1
+  - labels:
+      version: v2
+    name: version-v2
+  - labels:
+      version: v3
+    name: version-v3

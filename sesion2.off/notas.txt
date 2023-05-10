@@ -1,0 +1,62 @@
+kubectl get sa default -o yaml
+kubectl get secret
+
+# Role se puede aplicar a los pods, serviceaccount y usuarios/grupo de usuarios. Este también está limitado a un namespace.
+# RoleBinding, attach del roles con el servicio.
+# ClusterRole, a nivel del cluster
+# ClusterRoleBinding, attach con el ClusterRole.
+
+# Crear namespace
+kubectl create namespace dev-aforo255
+kubectl create namespace qa-aforo255
+kubectl create namespace prod-aforo255
+
+# Windows
+choco install openssl
+
+# Create certificate
+openssl genrsa -out dev1-aforo255.key 2048
+
+# Create Request certificate
+openssl req -new -key dev1-aforo255.key -out dev1-aforo255.csr -subj "CN=dev1-aforo255/0-aforo255"
+
+# Decodificar en base64 el archivo dev1-aforo255.csr
+
+# El resultado anterior modificarlo en el archivo auth.yaml [CERTIFICADO_EN_BASE_64]
+
+# Crear solicitud de certificado
+kubectl apply -f auth.yaml
+
+# Verificar solicitud de certificado
+kubectl get csr
+
+# Aprobar certificado
+kubectl certificate approve dev1-aforo255-sign
+
+# 
+kubectl get csr dev1-aforo255-sign -o jsonpath='{.status.certificate}'
+
+# copiar el certificado en base64 y decode64
+
+# Verificar certificado
+openssl x509 -in ivan-dev.cert -noout -text
+
+-- Configurar credenciales
+# Configurar credenciales de usuario
+kubectl config set-credentials dev1-aforo255 --client-certificate=dev1-aforo255.crt --client-key=dev1-aforo255.key
+
+# Crear contexto
+kubectl config set-context ct-dev1-aforo255 --cluster=docker-desktop --user=dev1-aforo255
+
+# Acitvar contexto
+kubectl config use-context ct-dev1-aforo255
+
+# Verificar contexto
+kubectl config get-contexts
+
+
+
+
+
+
+

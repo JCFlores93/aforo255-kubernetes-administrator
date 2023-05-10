@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-prod3
+  labels:
+    name: ns-prod3
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mem-cpu-demo
+  namespace: ns-prod3
+spec:
+  hard:
+    requests.cpu: "1" 
+    requests.memory: 1Gi 
+    limits.cpu: "2" #la suma de todos los objetos no debe ser mayor a un 2 CPU
+    limits.memory: 2Gi #la suma de todos los objetos no debe ser mayor a 2 GB

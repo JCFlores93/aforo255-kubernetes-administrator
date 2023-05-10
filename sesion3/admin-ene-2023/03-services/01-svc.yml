@@ -1,0 +1,36 @@
+apiVersion: apps/v1 #apigroup
+kind: Deployment #tipo de recursos
+metadata: #metadata del deployment
+  name: deployment-demoapp  #nombre del deployment
+  labels:
+    app: demoapp
+spec: #especificacion del replicaset
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demoapp #labels que el replicaset va a utilizar para encontrar a los pods
+  template: #datos del pod
+    metadata:
+      labels:
+        app: demoapp
+    spec: #especificacion del pod
+      containers:
+      - name: con-demoapp
+        image: icuadrosaforo255/dockerdemo
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-demoapp #nombre del servicio
+  labels:
+    app: demoapp
+spec:
+  type: LoadBalancer
+  selector:
+    app: demoapp #Con que labels obervaremos los pods
+  ports:
+    - protocol: TCP
+      port: 80 #el puerto en el que el servicio escucha
+      targetPort: 80 #que puerto del pod voy a consumir

@@ -1,0 +1,19 @@
+apiVersion: apps/v1 #apigroup
+kind: Deployment #tipo de recursos
+metadata: #metadata del deployment
+  name: deployment-demoapp  #nombre del deployment
+  labels:
+    app: demoapp
+spec: #especificacion del replicaset
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demoapp #labels que el replicaset va a utilizar para encontrar a los pods
+  template: #datos del pod
+    metadata:
+      labels:
+        app: demoapp
+    spec: #especificacion del pod
+      containers:
+      - name: con-demoapp
+        image: icuadrosaforo255/dockerdemo

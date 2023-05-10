@@ -1,0 +1,57 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+jobs:
+  terraform:
+    name: 'Terraform ${{ matrix.provider }}'
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+       provider: ['rancher/aws', 'rancher/azure', 'rancher/do', 'rancher/gcp', 'rancher/hcloud', 'rancher/linode', 'rancher/scw', 'rancher/outscale', 'neuvector/aws']
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.provider }}
+
+    # Checkout the repository to the GitHub Actions runner
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Install the latest version of Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    # Validates the Terraform configuration files
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Setup go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17.6
+
+    - name: Setup terraform-docs
+      run: go install github.com/terraform-docs/terraform-docs@v0.16.0
+
+    - name: Validate if terraform-docs generated README.md is up to date
+      run: terraform-docs -c ../../.terraform-docs-readme.yml . --output-check
+
+    - name: Validate if terraform-docs generated terraform.tfvars.example is up to date
+      run: terraform-docs -c ../../.terraform-docs-tfvars.yml . --output-check

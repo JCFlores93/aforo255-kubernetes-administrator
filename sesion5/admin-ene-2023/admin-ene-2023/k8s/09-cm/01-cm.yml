@@ -1,0 +1,14 @@
+---
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: demoapp2  
+spec:
+  containers:
+    - name: con-demoapp
+      image: icuadrosaforo255/dockerdemo
+      ports:
+        - containerPort: 80
+      env:
+      - name: COMPANY_NAME
+        value: "IVAN"

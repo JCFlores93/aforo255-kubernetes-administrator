@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: notificationservice
+  namespace: ns-aforo255
+spec:
+  hosts:
+  - notificationservice
+  http:
+  - route:
+    - destination:
+        host: notificationservice
+        subset: version-v1
+    mirror:
+      host: notificationservice
+      subset: version-v2

@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-dev
+  labels:
+    name: demoapp
+---
+apiVersion: apps/v1 #apigroup
+kind: Deployment #tipo de recursos
+metadata: #metadata del deployment
+  name: deploy-demoapp  #nombre del deployment
+  namespace: ns-dev
+  labels:
+    app: demoapp
+spec: #especificacion del replicaset
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demoapp #labels que el replicaset va a utilizar para encontrar a los pods
+  template: #datos del pod
+    metadata:
+      labels:
+        app: demoapp
+    spec: #especificacion del pod
+      containers:
+      - name: con-demoapp
+        image: icuadrosaforo255/dockerdemo:v2
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-demoapp #nombre del servicio
+  namespace: ns-dev
+  labels:
+    app: demoapp
+spec:
+  selector:
+    app: demoapp #Con que labels obervaremos los pods
+  ports:
+    - protocol: TCP
+      port: 80 #el puerto en el que el servicio escucha
+      targetPort: 80 #que puerto del pod voy a consumir

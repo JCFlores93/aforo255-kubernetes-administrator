@@ -1,0 +1,26 @@
+apiVersion: v1 
+kind: Pod  
+metadata:
+  name: demoapp1 
+  labels:
+    app: backend
+    env: dev
+    project: bank
+spec: 
+  containers:
+    - name: con-demoapp1  
+      image: icuadrosaforo255/dockerdemo 
+---
+apiVersion: v1  
+kind: Pod 
+metadata:
+  name: demoapp2 
+  labels:
+    app: backend
+    env: prod
+    project: bank
+spec: 
+  containers:
+    - name: con-demoapp2 
+      image: icuadrosaforo255/dockerdemo
+  serviceAccountName: sa-aforo255

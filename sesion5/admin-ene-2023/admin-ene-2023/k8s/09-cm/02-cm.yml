@@ -1,0 +1,25 @@
+--- 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo2 #CREAMOS UN NUEVO CONFIGMAP PARA CAMBIAR LA COMPAÑIA
+data:
+  company_name_config: "KUBERNETES"
+---
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: demoapp2  
+spec:
+  containers:
+    - name: con-demoapp
+      image: icuadrosaforo255/dockerdemo
+      ports:
+        - containerPort: 80
+      env: #ENLAZAMOS LA VARIABLE
+        - name: COMPANY_NAME #lo que este en el proyecto y vamos a cambiar
+          valueFrom:  
+            configMapKeyRef:
+              name: game-demo2 #nombre del config maps
+              key: company_name_config #valor
+

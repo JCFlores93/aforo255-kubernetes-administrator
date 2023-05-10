@@ -1,0 +1,27 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: deployment-demoapp  
+  namespace: ns-prod3
+  labels:
+    app: demoapp
+spec: 
+  replicas: 5 #RAIZ DEL ERROR
+  selector:
+    matchLabels:
+      app: demoapp 
+  template: 
+    metadata:
+      labels:
+        app: demoapp
+    spec: 
+      containers:
+      - name: con-demoapp
+        image: icuadrosaforo255/dockerdemo
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: 0.5 
+          limits:
+            memory: "500Mi" #AQUI
+            cpu: 0.5 #AQUI
